@@ -1,4 +1,4 @@
-package com.thaontm.demo.demoThaoTodo;
+package com.thaontm.demo.demoThaoTodo.controller;
 
 import com.thaontm.demo.demoThaoTodo.model.Category;
 import com.thaontm.demo.demoThaoTodo.model.Todo;
@@ -27,6 +27,7 @@ public class WelcomeController {
 
     @RequestMapping("/")
     public String getCategories(Map<String, Object> model) {
+        model.put("catId", 1);
         model.put("categories", categoryRepository.findAll());
         model.put("todos", categoryRepository.findOne(1).getTodos());
         return "welcome";
@@ -55,4 +56,26 @@ public class WelcomeController {
         categoryRepository.save(new Category(catId, title, null));
         return "redirect:/";
     }
+
+    @RequestMapping(value = "/categories/{catId}/todos/", method = RequestMethod.GET)
+    public String getTodos(Map<String, Object> model, @PathVariable("catId") Integer catId) {
+        model.put("catId", catId);
+        model.put("categories", categoryRepository.findAll());
+        model.put("todos", categoryRepository.findOne(catId).getTodos());
+        return "welcome";
+    }
+
+    @RequestMapping(value = "/categories/{catId}/todos/add/", method = RequestMethod.POST)
+    public String addTodo(Map<String, Object> model, @PathVariable("catId") Integer catId, @RequestParam String title) {
+        todoRepository.save(new Todo(title, categoryRepository.findOne(catId)));
+        return "redirect:/categories/" + catId + "/todos/";
+    }
+
+    @RequestMapping(value = "/categories/{catId}/todos/remove/{id}", method = RequestMethod.GET)
+    public String removeTodo(Map<String, Object> model, @PathVariable("catId") Integer catId, @PathVariable("id") Integer id) {
+        model.put("catId", catId);
+        todoRepository.delete(todoRepository.findOne(id));
+        return "redirect:/categories/" + catId + "/todos/";
+    }
+
 }
