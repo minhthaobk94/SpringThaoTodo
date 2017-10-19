@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Thao Todo</title>
+    <link rel="stylesheet" href="../../css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../css/font-awesome.min.css"/>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
+            integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"
+            integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<!-- Header -->
+<div th:replace="fragments/header :: header"></div>
+<form id="f_updateCategory" action="/categories/update/" th:value="${category}" method="post">
+    <div class="input-group input-group">
+        <input type="hidden" name="catId" th:value="${category.getId()}"/>
+        <input type="text" class="form-control" placeholder="Enter category"
+               aria-describedby="sizing-addon1" name="title" th:value="${category.getTitle()}"/>
+        <span class="input-group-addon" id="btnAddCategory"
+              onclick="document.getElementById('f_updateCategory').submit();"><i class="fa fa-plus"
+                                                                              aria-hidden="true"></i></span>
+    </div>
+</form>
+<!-- Footer -->
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>
