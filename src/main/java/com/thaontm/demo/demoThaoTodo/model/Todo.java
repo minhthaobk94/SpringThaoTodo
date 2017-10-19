@@ -12,7 +12,12 @@ public class Todo {
 	public Todo() {
 	}
 
-    @Id
+	public Todo(String title, Category category) {
+		this.title = title;
+		this.category = category;
+	}
+
+	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
