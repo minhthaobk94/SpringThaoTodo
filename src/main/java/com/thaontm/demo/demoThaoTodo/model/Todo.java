@@ -1,17 +1,16 @@
 package com.thaontm.demo.demoThaoTodo.model;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Data
 @Entity
 @Table(name = "todo")
-@NoArgsConstructor
 @AllArgsConstructor
 public class Todo {
+
+	public Todo() {
+	}
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,10 +20,30 @@ public class Todo {
     private String title;
 
     @ManyToOne
-    @JoinColumn(name = "catId")
+    @JoinColumn(name = "cat_id")
     private Category category;
 
     public Todo(String title) {
         this.title = title;
     }
+
+	public int getId() {
+		return id;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
 }

@@ -15,8 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-//import com.thaontm.demo.demoThaoTodo.repository.CategoryRepository;
-
 @Controller
 public class WelcomeController {
     private List<Todo> todos = new ArrayList<>();
