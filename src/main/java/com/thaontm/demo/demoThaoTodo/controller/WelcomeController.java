@@ -78,4 +78,16 @@ public class WelcomeController {
         return "redirect:/categories/" + catId + "/todos/";
     }
 
+    @RequestMapping(value = "/categories/{catId}/todos/update/{id}", method = RequestMethod.GET)
+    public String showUpdateTodoPage(Map<String, Object> model, @PathVariable("catId") Integer catId, @PathVariable("id") Integer id) {
+        model.put("catId", catId);
+        model.put("todo", todoRepository.findOne(id));
+        return "todo-update";
+    }
+
+    @RequestMapping(value = "/categories/{catId}/todos/update/", method = RequestMethod.POST)
+    public String updateTodo(Map<String, Object> model, @RequestParam Integer id, @RequestParam String title, @PathVariable("catId") Integer catId) {
+        todoRepository.save(new Todo(id, title, categoryRepository.findOne(catId)));
+        return "redirect:/categories/" + catId + "/todos/";
+    }
 }

@@ -3,7 +3,7 @@
 
 <head>
     <title>Thao Todo</title>
-     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
           integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous"/>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
           integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"/>
@@ -39,11 +39,13 @@
         </div>
         <div class="col-xl-8">
             <form id="f_addTodo" th:action="@{'/categories/' + ${catId} + '/todos/add/'}" method="post">
-            <div class="input-group input-group">
-                <input type="text" class="form-control" placeholder="What do you need to do"
-                       aria-describedby="sizing-addon1" name="title"/>
-                <span class="input-group-addon" id="btnAddTodo" onclick="document.getElementById('f_addTodo').submit();"><i class="fa fa-plus" aria-hidden="true"></i></span>
-            </div>
+                <div class="input-group input-group">
+                    <input type="text" class="form-control" placeholder="What do you need to do"
+                           aria-describedby="sizing-addon1" name="title"/>
+                    <span class="input-group-addon" id="btnAddTodo"
+                          onclick="document.getElementById('f_addTodo').submit();"><i class="fa fa-plus"
+                                                                                      aria-hidden="true"></i></span>
+                </div>
             </form>
             <div class="dropdown-divider"></div>
         </div>
@@ -54,7 +56,6 @@
         <div class="col-xl-4">
             <ul class="list-group">
                 <li class="list-group-item list-group-item-action" th:each="category : ${categories}">
-
                     <div class="row align-items-start">
                         <div class="col-xl-9">
                             <a th:href="@{'/categories/' + ${category.getId()} + '/todos/'}">
@@ -85,10 +86,12 @@
                             <h6 th:text="${todo.getTitle()}"></h6>
                         </div>
                         <div class="col-xl-2 btn-group" role="group">
-                            <a class="btn btn-outline-warning" href="#">
-                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                            <a class="btn btn-outline-warning"
+                               th:href="@{'/categories/' + ${catId} + '/todos/update/' + ${todo.getId()}}">
+                            <i class="fa fa-pencil" aria-hidden="true"></i>
                             </a>
-                            <a class="btn btn-outline-danger" th:href="@{'/categories/' + ${catId} + '/todos/remove/' + ${todo.getId()}}">
+                            <a class="btn btn-outline-danger"
+                               th:href="@{'/categories/' + ${catId} + '/todos/remove/' + ${todo.getId()}}">
                                 <i class="fa fa-trash" aria-hidden="true"></i>
                             </a>
                         </div>
