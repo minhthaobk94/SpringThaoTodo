@@ -17,16 +17,21 @@
 <body>
 <!-- Header -->
 <div th:replace="fragments/header :: header"></div>
-<form id="f_updateCategory" action="/categories/update/" th:value="${category}" method="post">
-    <div class="input-group input-group">
-        <input type="hidden" name="catId" th:value="${category.getId()}"/>
-        <input type="text" class="form-control" placeholder="Enter category"
-               aria-describedby="sizing-addon1" name="title" th:value="${category.getTitle()}"/>
-        <span class="input-group-addon" id="btnAddCategory"
-              onclick="document.getElementById('f_updateCategory').submit();"><i class="fa fa-plus"
-                                                                              aria-hidden="true"></i></span>
-    </div>
-</form>
+
+<!--Update Form-->
+<div class="container">
+    <form id="f_updateCategory" action="/categories/update/" th:value="${category}" method="post"
+          style="margin-top:20%">
+        <div class="input-group input-group">
+            <input type="hidden" name="catId" th:value="${category.getId()}"/>
+            <input type="text" class="form-control" placeholder="Enter category"
+                   aria-describedby="sizing-addon1" name="title" th:value="${category.getTitle()}"/>
+            <span class="input-group-addon" id="btnAddCategory"
+                  onclick="document.getElementById('f_updateCategory').submit();"><i class="fa fa-plus"
+                                                                                     aria-hidden="true"></i></span>
+        </div>
+    </form>
+</div>
 <!-- Footer -->
 <div th:replace="fragments/footer :: footer"></div>
 </body>
