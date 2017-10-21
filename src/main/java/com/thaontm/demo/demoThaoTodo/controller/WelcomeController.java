@@ -90,4 +90,14 @@ public class WelcomeController {
         todoRepository.save(new Todo(id, title, categoryRepository.findOne(catId)));
         return "redirect:/categories/" + catId + "/todos/";
     }
+
+    @RequestMapping(value = "/search/", method = RequestMethod.GET)
+    public String search(Map<String, Object> model, @RequestParam String q) {
+        if (!q.isEmpty()) {
+            model.put("todos", todoRepository.findByTitleContaining(q));
+        } else {
+            model.put("todos", todoRepository.findAll());
+        }
+        return "search";
+    }
 }
