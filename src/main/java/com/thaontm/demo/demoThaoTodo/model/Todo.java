@@ -28,6 +28,9 @@ public class Todo {
     @JoinColumn(name = "cat_id")
     private Category category;
 
+    @Column(name = "done")
+	private boolean done;
+
     public Todo(String title) {
         this.title = title;
     }
@@ -50,5 +53,13 @@ public class Todo {
 
 	public void setCategory(Category category) {
 		this.category = category;
+	}
+
+	public boolean isDone() {
+		return done;
+	}
+
+	public void setDone(boolean done) {
+		this.done = done;
 	}
 }

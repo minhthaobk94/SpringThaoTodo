@@ -54,45 +54,42 @@
     <!-- List categories -->
     <div class="row" style="margin:1%">
         <div class="col-xl-4">
-            <ul class="list-group">
-                <li class="list-group-item list-group-item-action" th:each="category : ${categories}">
-                    <div class="row align-items-start">
-                        <div class="col-xl-9">
-                            <a th:href="@{'/categories/' + ${category.getId()} + '/todos/'}">
-                                <h6 th:text="${category.getTitle()}"></h6>
-                            </a>
-                        </div>
-                        <div class="col-xl-3 btn-group" role="group">
-                            <a class="btn btn-outline-warning"
-                               th:href="@{'/categories/update/' + ${category.getId()}}">
-                                <i class="fa fa-pencil" aria-hidden="true"></i>
-                            </a>
-                            <a class="btn btn-outline-danger"
-                               th:href="@{'/categories/remove/' + ${category.getId()}}">
-                                <i class="fa fa-trash" aria-hidden="true"></i>
-                            </a>
-                        </div>
+            <div class="list-group">
+                <a class="list-group-item list-group-item-action flex-column align-items-start"
+                   th:each="category : ${categories}"
+                   th:classappend="${category.getId() == catId ? 'active' : ''}"
+                   th:href="@{'/categories/' + ${category.getId()} + '/todos/'}">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1" th:text="${category.getTitle()}">List group item heading</h5>
+                            <small class="badge badge-light" onclick="moveToUpdate([[${category.getId()}]])">>>>>></small>
+                            <!--<a th:href="@{'/categories/update/' + ${category.getId()}}">...</a>-->
                     </div>
-                </li>
-
-            </ul>
+                </a>
+            </div>
         </div>
+
+        <script>
+            function moveToUpdate(id) {
+                window.location = '/categories/update/' + id;
+                return true;
+            }
+        </script>
         <!-- All todos of a category -->
         <div class="col-xl-8">
             <ul class="list-group">
                 <li class="list-group-item" th:each="todo : ${todos}">
-                    <div class="row align-items-start">
+                    <div class="container row align-items-start">
                         <div class="col-xl-10">
+                            <form th:action="@{'/categories/' + ${catId} + '/todos/remove/' + ${todo.getId()}}"
+                                  method="get">
+                                <input type="checkbox" class="form-check-input"
+                                       onchange="$(this).closest('form').submit()"/>
+                            </form>
                             <h6 th:text="${todo.getTitle()}"></h6>
                         </div>
                         <div class="col-xl-2 btn-group" role="group">
-                            <a class="btn btn-outline-warning"
-                               th:href="@{'/categories/' + ${catId} + '/todos/update/' + ${todo.getId()}}">
-                            <i class="fa fa-pencil" aria-hidden="true"></i>
-                            </a>
-                            <a class="btn btn-outline-danger"
-                               th:href="@{'/categories/' + ${catId} + '/todos/remove/' + ${todo.getId()}}">
-                                <i class="fa fa-trash" aria-hidden="true"></i>
+                            <a th:href="@{'/categories/' + ${catId} + '/todos/update/' + ${todo.getId()}}">
+                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                             </a>
                         </div>
                     </div>
@@ -101,7 +98,7 @@
         </div>
     </div>
 
-    <!-- Pagination -->
+    <!-- PaginationUtils -->
     <div class="row">
         <div class="col-xl-9"></div>
         <div class="col-xl-3">

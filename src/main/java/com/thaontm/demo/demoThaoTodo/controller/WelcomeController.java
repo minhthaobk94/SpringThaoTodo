@@ -4,6 +4,8 @@ import com.thaontm.demo.demoThaoTodo.model.Category;
 import com.thaontm.demo.demoThaoTodo.model.Todo;
 import com.thaontm.demo.demoThaoTodo.repository.CategoryRepository;
 import com.thaontm.demo.demoThaoTodo.repository.TodoRepository;
+import com.thaontm.demo.demoThaoTodo.service.CategoryService;
+import com.thaontm.demo.demoThaoTodo.service.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,11 +27,18 @@ public class WelcomeController {
     @Autowired
     TodoRepository todoRepository;
 
+    @Autowired
+    TodoService todoService;
+
+    @Autowired
+    CategoryService categoryService;
+
+
     @RequestMapping("/")
     public String getCategories(Map<String, Object> model) {
-        model.put("catId", 1);
-        model.put("categories", categoryRepository.findAll());
-        model.put("todos", categoryRepository.findOne(1).getTodos());
+        model.put("catId", categoryRepository.findTopByOrderByIdDesc().getId());
+        model.put("categories", categoryService.findAll());
+        model.put("todos", categoryRepository.findTopByOrderByIdDesc().getTodos());
         return "welcome";
     }
 
@@ -87,17 +96,7 @@ public class WelcomeController {
 
     @RequestMapping(value = "/categories/{catId}/todos/update/", method = RequestMethod.POST)
     public String updateTodo(Map<String, Object> model, @RequestParam Integer id, @RequestParam String title, @PathVariable("catId") Integer catId) {
-        todoRepository.save(new Todo(id, title, categoryRepository.findOne(catId)));
+        todoRepository.save(new Todo(id, title, categoryRepository.findOne(catId), false));
         return "redirect:/categories/" + catId + "/todos/";
-    }
-
-    @RequestMapping(value = "/search/", method = RequestMethod.GET)
-    public String search(Map<String, Object> model, @RequestParam String q) {
-        if (!q.isEmpty()) {
-            model.put("todos", todoRepository.findByTitleContaining(q));
-        } else {
-            model.put("todos", todoRepository.findAll());
-        }
-        return "search";
     }
 }
