@@ -19,10 +19,9 @@
 </head>
 
 <body>
+<!-- Header -->
+<div th:replace="fragments/header :: header"></div>
 <div class="container-fluid">
-    <!-- Header -->
-    <div th:replace="fragments/header :: header"></div>
-
     <!-- Adding boxes -->
     <div class="row" style="margin:1%">
         <div class="col-xl-4">
@@ -59,40 +58,36 @@
                    th:each="category : ${categories}"
                    th:classappend="${category.getId() == catId ? 'active' : ''}"
                    th:href="@{'/categories/' + ${category.getId()} + '/todos/'}">
-                    <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1" th:text="${category.getTitle()}">List group item heading</h5>
-                            <small class="badge badge-light" onclick="moveToUpdate([[${category.getId()}]])">>>>>></small>
-                            <!--<a th:href="@{'/categories/update/' + ${category.getId()}}">...</a>-->
-                    </div>
+                    <span th:text="${category.getTitle()}"></span>
+                    <span class="float-right badge badge-light"
+                          th:onclick="'showUpdateCategoryPage(\''+ ${category.getId()} + '\'); return false;'"><i
+                            class="fa fa-arrow-right"
+                            aria-hidden="true"></i></span>
                 </a>
             </div>
         </div>
 
         <script>
-            function moveToUpdate(id) {
-                window.location = '/categories/update/' + id;
-                return true;
+            function showUpdateCategoryPage(catId) {
+                window.location = '/categories/update/' + catId;
             }
         </script>
+
         <!-- All todos of a category -->
         <div class="col-xl-8">
             <ul class="list-group">
-                <li class="list-group-item" th:each="todo : ${todos}">
-                    <div class="container row align-items-start">
-                        <div class="col-xl-10">
-                            <form th:action="@{'/categories/' + ${catId} + '/todos/remove/' + ${todo.getId()}}"
-                                  method="get">
-                                <input type="checkbox" class="form-check-input"
-                                       onchange="$(this).closest('form').submit()"/>
-                            </form>
-                            <h6 th:text="${todo.getTitle()}"></h6>
-                        </div>
-                        <div class="col-xl-2 btn-group" role="group">
-                            <a th:href="@{'/categories/' + ${catId} + '/todos/update/' + ${todo.getId()}}">
-                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                            </a>
-                        </div>
-                    </div>
+                <li class="list-group-item justify-content-between" th:each="todo : ${todos}">
+                    <form class="container"
+                          th:action="@{'/categories/' + ${catId} + '/todos/remove/' + ${todo.getId()}}"
+                          method="get">
+                        <input type="checkbox" class="form-check-input"
+                               onchange="$(this).closest('form').submit()"/>
+                        <span th:text="${todo.getTitle()}"></span>
+                        <a class="float-right"
+                           th:href="@{'/categories/' + ${catId} + '/todos/update/' + ${todo.getId()}}">
+                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                        </a>
+                    </form>
                 </li>
             </ul>
         </div>
@@ -128,5 +123,4 @@
 <!-- Footer -->
 <div th:replace="fragments/footer :: footer"></div>
 </body>
-
 </html>
