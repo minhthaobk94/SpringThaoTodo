@@ -10,9 +10,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class CategoryServiceImpl implements CategoryService{
+public class CategoryServiceImpl implements CategoryService {
     @Autowired
     CategoryRepository categoryRepository;
+
     @Override
     public List<Category> findAll() {
         return (List<Category>) categoryRepository.findAll(new Sort(Sort.Direction.DESC, "id"));
@@ -26,5 +27,15 @@ public class CategoryServiceImpl implements CategoryService{
     @Override
     public Category findOne(int catId) {
         return categoryRepository.findOne(catId);
+    }
+
+    @Override
+    public void delete(Integer catId) {
+        categoryRepository.delete(catId);
+    }
+
+    @Override
+    public Category findTopByOrderByIdDesc() {
+        return categoryRepository.findTopByOrderByIdDesc();
     }
 }

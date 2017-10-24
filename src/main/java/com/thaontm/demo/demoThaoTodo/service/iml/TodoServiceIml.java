@@ -14,7 +14,6 @@ import java.util.List;
 @Service
 @Transactional
 public class TodoServiceIml implements TodoService {
-
     @Autowired
     TodoRepository todoRepository;
 
@@ -36,5 +35,20 @@ public class TodoServiceIml implements TodoService {
     @Override
     public Page<Todo> findByTitleContaining(String q, Pageable pageable) {
         return todoRepository.findByTitleContaining(q, pageable);
+    }
+
+    @Override
+    public void save(Todo todo) {
+        todoRepository.save(todo);
+    }
+
+    @Override
+    public Todo findOne(Integer id) {
+        return todoRepository.findOne(id);
+    }
+
+    @Override
+    public void delete(Todo todo) {
+        todoRepository.delete(todo);
     }
 }

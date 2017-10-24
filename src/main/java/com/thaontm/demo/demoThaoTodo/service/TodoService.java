@@ -8,7 +8,16 @@ import java.util.List;
 
 public interface TodoService {
     List<Todo> findAll();
+
     Page<Todo> findAll(Pageable pageable);
+
     List<Todo> findByTitleContaining(String q);
+
     Page<Todo> findByTitleContaining(String q, Pageable pageable);
+
+    void save(Todo todo);
+
+    Todo findOne(Integer id);
+
+    void delete(Todo todo);
 }

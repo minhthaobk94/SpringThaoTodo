@@ -10,4 +10,8 @@ public interface CategoryService {
     void save(Category category);
 
     Category findOne(int catId);
+
+    void delete(Integer catId);
+
+    Category findTopByOrderByIdDesc();
 }
