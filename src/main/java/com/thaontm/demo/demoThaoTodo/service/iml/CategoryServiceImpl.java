@@ -17,4 +17,14 @@ public class CategoryServiceImpl implements CategoryService{
     public List<Category> findAll() {
         return (List<Category>) categoryRepository.findAll(new Sort(Sort.Direction.DESC, "id"));
     }
+
+    @Override
+    public void save(Category category) {
+        categoryRepository.save(category);
+    }
+
+    @Override
+    public Category findOne(int catId) {
+        return categoryRepository.findOne(catId);
+    }
 }

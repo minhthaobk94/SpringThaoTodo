@@ -13,14 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 @Controller
 public class WelcomeController {
-    private List<Todo> todos = new ArrayList<>();
-
     @Autowired
     CategoryRepository categoryRepository;
 
@@ -42,29 +38,13 @@ public class WelcomeController {
         return "welcome";
     }
 
-    @RequestMapping(value = "/categories/add/", method = RequestMethod.POST)
-    public String addCategory(Map<String, Object> model, @RequestParam String title) {
-        categoryRepository.save(new Category(title));
-        return "redirect:/";
-    }
-
     @RequestMapping(value = "/categories/remove/{catId}", method = RequestMethod.GET)
     public String removeCategory(Map<String, Object> model, @PathVariable("catId") Integer catId) {
         categoryRepository.delete(catId);
         return "redirect:/";
     }
 
-    @RequestMapping(value = "/categories/update/{catId}", method = RequestMethod.GET)
-    public String showUpdateCategoryPage(Map<String, Object> model, @PathVariable("catId") Integer catId) {
-        model.put("category", categoryRepository.findOne(catId));
-        return "category-update";
-    }
 
-    @RequestMapping(value = "/categories/update/", method = RequestMethod.POST)
-    public String updateCategory(Map<String, Object> model, @RequestParam Integer catId, @RequestParam String title) {
-        categoryRepository.save(new Category(catId, title, null));
-        return "redirect:/";
-    }
 
     @RequestMapping(value = "/categories/{catId}/todos/", method = RequestMethod.GET)
     public String getTodos(Map<String, Object> model, @PathVariable("catId") Integer catId) {
